@@ -8,13 +8,18 @@
 </head>
 <body>
     <h2>ONS UK Consumer Prices Index<br>including owner occupiers' housing costs</h2>
+
     <canvas id="chart" width="800" height="400"></canvas>
+
     <script>
        //  Data Source: https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l55o/mm23
+
         chartIt();
+
         async function chartIt() {
             const data = await getData();
             const ctx = document.getElementById('chart').getContext('2d');
+
             const myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -25,7 +30,7 @@
                     backgroundColor: [
                         'rgba(14, 194, 208, 0.5)',
                         'rgba(119, 229, 244, 0.5)',
-                        'rgba(207, 251, 252, 0.5)'
+                        'rgba(207, 251, 252, 0.5)'                        
                     ],
                     borderColor: ['rgba(14, 194, 208, 0.8)'],
                     borderWidth: 1,
@@ -42,27 +47,35 @@
         });
 
     };
+
        async function getData() {
-            const xs = [];
-            const ys = [];
-            const response = await fetch('./CPIH_csv.csv');
+            const xAxis = [];
+            const yAxis = [];
+
+            const response = await fetch('./03d. CPIH_csv.csv');
             const data = await response.text();
-            const table = data.split('\n').slice(9);
-            table.forEach(row => {
+
+            const rows = data.split('\n').slice(9);
+            rows.forEach(row => {
+            
                 const columns = row.split(',');
-                const xAxis = columns[0];
-                    const date = new Date(xAxis);
-                    const xValue = date.getFullYear();
-                    const dateString = (xValue);                                   
-                xs.push(xValue);
-                const yAxis = columns[1];
-                    const Text = yAxis.toString();
-                    const yValue = Text.slice(1, 4);                  
-                ys.push(yValue);                   
-                console.log(xAxis, yAxis);
+                
+                //x Axis
+                const date = new Date(xAxis);
+                const xValue = date.getFullYear();
+                const dateString = (xValue);                                   
+                xAxis.push(xValue(columns[0]));
+                
+                //y Axis
+                const Text = yAxis.toString();
+                const yValue = Text.slice(1, 4);                  
+                yAxis.push(yValue(columns[1]));
+                
             });
-            return { xs, ys }; 
+            return { xAxis, yAxis }; 
        };
-    </script>    
+
+    </script>
+
 </body>
 </html>
