@@ -1,5 +1,5 @@
 ONS UK Consumer Prices Index including owner occupiers' housing costs
-//  Data Source: https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l55o/mm23
+// Data Source: https://www.ons.gov.uk/economy/inflationandpriceindices/timeseries/l55o/mm23
     chartIt();
         async function chartIt() {
             const data = await getData();
@@ -31,19 +31,14 @@ ONS UK Consumer Prices Index including owner occupiers' housing costs
         });
     };
        async function getData() {
-            const xAxis = [];
-            const yAxis = [];
+            const xAxis = []; const yAxis = [];
             const response = await fetch('./03d. CPIH_csv.csv');
             const data = await response.text();
             const rows = data.split('\n').slice(9);
             rows.forEach(row => {
             const columns = row.split(',');
-            const date = new Date(xAxis);
-            const xValue = date.getFullYear();
             const dateString = (xValue);                                   
-            xAxis.push(xValue(columns[0]));
-            const Text = yAxis.toString();
-            const yValue = Text.slice(1, 4);                  
+            xAxis.push(xValue(columns[0]));                         
             yAxis.push(yValue(columns[1]));                
             });
             return { xAxis, yAxis }; 
